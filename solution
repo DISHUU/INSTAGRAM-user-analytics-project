@@ -1,0 +1,56 @@
+1. Rewarding Most Loyal Users: 
+Query:
+SELECT * FROM users
+ORDER BY created_at
+LIMIT 5;
+
+Explanation:
+By using the above query I am going to sort the distinct instagram users by the date on which the account was created and would order them as per the date created , in this way I would be able to get the data for the most loyal instagram users, Then I would be limiting the number to 5 to know top 5 most loyal users.
+
+2. Remind Inactive Users to start posting:
+Query:
+SELECT username
+FROM users
+LEFT JOIN photos ON users.id = photos.user_id
+WHERE photos.id IS NULL;
+
+Explanation:
+By using above query I would be able to select the username from the table users and by using the command left join I would be able to fetch all the values from users table and combine them with the values that satisfies the condition  from the photos table and join them to get the desired output for the most inactive users,so that we could target them with the email campaign.
+
+3. Declaring Contest Winner:
+Query:
+SELECT users.username,
+This command select username from table users
+Photos.id,photos.image_url,
+This command select id,image_url from table photos
+COUNT(*) AS Total_L
+FROM likes
+JOIN photos ON photos.id = likes.photo_id
+JOIN users ON users.id = likes.user_id
+The above command gives the output by joining the table users and photos by given condition and count all the columns by using (*) as total likes
+GROUP BY photos.id
+ORDER BY Total_L DESC
+LIMIT 1;
+Then the given result is group by photos.id and order by maximum likes in descending order and at the end we limit by output by 1 to get the contest winner by getting maximum likes on a photo.
+
+4. Hashtag Researching:
+Query:
+SELECT tag_name, COUNT(tag_name) AS total_hash
+FROM tags
+JOIN photo_tags ON tags.id = photo_tags.tag_id
+GROUP BY tags.id
+ORDER BY total_hash DESC
+LIMIT 5;
+Explanation:
+By using the above query I am combining the table data from tags and photos and grouping them with tags id arranging in descending order and limiting the output by 5 to get 5 top used hashtags.
+
+5. Launch AD Campaign:
+Query:
+SELECT date_format(created_at,'%W') AS weekdayy,
+COUNT(*) AS registered
+FROM users
+GROUP BY weekdayy
+ORDER BY registered DESC;
+
+Output:
+Most users registered on Sunday and Thursday.
